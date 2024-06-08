@@ -15,21 +15,20 @@ Forked from https://github.com/as0ler/BinaryCookieReader/
 python3 BinaryCookieReader.py [path] [output_path]
 `
 
-where `[path]` is the path to the `.binarycookies` file (generally, Safari's `Cookies.binarycookies` file is stored in `~/Library/Containers/com.apple.Safari/Data/Library/Cookies/Cookies.binarycookies`)
-and `[output_path]` is the path pointing to the destination of the `cookies.txt` file (more information about the `Netscape Cookies.txt File Format` at `http://justsolve.archiveteam.org/wiki/Netscape_cookies.txt`).
+where:
+- `[path]` is the path to the `.binarycookies` file (generally, Safari's `Cookies.binarycookies` file is stored in `~/Library/Containers/com.apple.Safari/Data/Library/Cookies/Cookies.binarycookies`)
+- `[output_path]` is the path pointing to the destination of the `cookies.txt` file (more information about the `Netscape Cookies.txt File Format` at `http://justsolve.archiveteam.org/wiki/Netscape_cookies.txt`)
 
 ## Cookies.binarycookies Format
 
 Cookies.binarycookies file is composed of several pages and each page can have one or more cookies. The complete file format is explained below:
 
 ### File Format:
-1. The file starts with a 4 byte magic string: cook. It is used to identify the file type.
+1. The file starts with a 4 byte magic string: `cook`. It is used to identify the file type.
 2. Next four bytes is an integer specifying the number of pages in the file.
 3. Following that, a 4 byte integer for each page, represents the page size.
 4. Next to that, the file contains the actual page content. Each page is of length corresponding to the page size. Page format is explained below.
 5. The file ends with an 8 byte value and it might be file checksum.`
-
-
 
 ### Page Format:
 1. Every page starts with a 4 byte page header: 0x00000100.
@@ -41,7 +40,7 @@ Cookies.binarycookies file is composed of several pages and each page can have o
 ### Cookie Format:
 1. First 4 bytes in the cookie is the size of the cookie.
 2. The next 4 bytes are unknown (may be related to cookies flags).
-3. The next four bytes are the cookie flags. This is an integer value (1=Secure, 4=HttpOnly, 5= Secure+HttpOnly).
+3. The next four bytes are the cookie flags. This is an integer value that can be a combination of the following flags: (`Secure`, `HttpOnly`, `SameSite`, `SameSite_Strict`)
 4. The next 4 bytes are unknown.
 5. The next 4 bytes is an integer specifying the start of the url field in bytes from the start of the cookie record.
 6. The next 4 bytes is an integer specifying the start of the name field in bytes from the start of the cookie record.
